@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter_getx/controller/datacontroller.dart';
@@ -26,38 +26,36 @@ final controller = Get.put(DataController());
           //store data value
           var data = controller.datamodel.value;
           //display data
-          return Column(
-             mainAxisAlignment: MainAxisAlignment.center,
+         return controller.loading.isTrue? 
+        Center(child: CircularProgressIndicator(),):
+        Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.white
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text (data.category??"",
-              style: const TextStyle(
-                color: Colors.brown,
-                fontSize: 16
+              SizedBox(
+                height: 200,
+                width: 200,
+                child: Image.network(data.image!,
+                fit: BoxFit.cover,
+                ),
               ),
-              ),
-              Text(data.title??"",
-              style: TextStyle(
-                color: Colors.green,
-                fontSize: 16
-              ),
-              ),
-              Text(data.description??"",
-              style: TextStyle(
-                color: Colors.red,
-                fontSize: 16
-              ),
-              ),
-              Text(data.price.toString(),
-              style: TextStyle(
-                color: Colors.cyan,
-                fontSize: 16
-              ),
-              ),
-              
+              Text("Title:${data.title}",),
+              Text("Price:${data.price}",),
+              Text("Category:${data.category}",),
+              Text("ID:${data.id}",),
+              Text("Count:${data.rating?.count}"),
+              Text("Rate:${data.rating?.rate}",),
             ],
-          );
-
-        }),
+          ),
+        );  
+        }
+        ),
       ),
     );
   }
